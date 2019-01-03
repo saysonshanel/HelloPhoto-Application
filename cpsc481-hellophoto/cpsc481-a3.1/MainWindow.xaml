@@ -1,0 +1,103 @@
+﻿<Window x:Class="cpsc481_a3._1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:cpsc481_a3._1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Rectangle Fill="#FF1C615D" RadiusY="20" RadiusX="20" Stroke="#FF1C615D" Cursor="Hand"/>
+                            <ContentPresenter TextBlock.Foreground="White" TextBlock.FontWeight="Bold" TextBlock.FontSize="18" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="Start"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="StartButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FF2F938D"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FF2F938D"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed"/>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Rectangle x:Name="rectangle" Fill="#FF1C615D" RadiusY="20" RadiusX="20" Stroke="#FF1C615D"/>
+                            <ContentPresenter TextBlock.Foreground="White" TextBlock.FontWeight="Bold" TextBlock.FontSize="18" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="Start"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Key="SplashDisappear">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SplashCanvas">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="button">
+            <BeginStoryboard Storyboard="{StaticResource SplashDisappear}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Canvas x:Name="Container">
+
+        <Canvas x:Name="SplashCanvas" Height="289" Canvas.Left="140" Canvas.Top="10" Width="246">
+            <Canvas Height="245" Width="246">
+                <Rectangle Fill="#FF76A08D" HorizontalAlignment="Left" Height="245" Stroke="#FF76A08D" VerticalAlignment="Top" Width="246" RadiusX="15" RadiusY="15"/>
+                <Rectangle Fill="White" HorizontalAlignment="Left" Height="102" RadiusY="15" RadiusX="15" Stroke="White" VerticalAlignment="Top" Width="146" RenderTransformOrigin="0.5,0.5" Canvas.Left="31" Canvas.Top="48">
+                    <Rectangle.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-32.059"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="44" TextWrapping="Wrap" Text="Hello Photo" VerticalAlignment="Top" Width="226" Foreground="White" FontSize="36" FontWeight="Bold" Canvas.Left="14" Canvas.Top="180"/>
+            </Canvas>
+            <Button x:Name="button" Content="Button" Height="39" Canvas.Left="88" Style="{DynamicResource StartButton}" Canvas.Top="250" Width="67"/>
+
+        </Canvas>
+        <ScrollViewer x:Name="ScrollViewer" Height="296.167" Canvas.Left="7.21" Canvas.Top="12.833" Width="499.79">
+            <UniformGrid x:Name="ImagePanel" Width="484.562" Columns="3" Cursor="Hand"/>
+        </ScrollViewer>
+        <local:PhotoViewControl x:Name="PhotoViewControl" Height="296.167" Canvas.Left="10" Canvas.Top="12.833" Width="497"/>
+
+    </Canvas>
+</Window>
